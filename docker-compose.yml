@@ -1,0 +1,40 @@
+# docker-compose.yml — the 3 distributed cache nodes.
+#
+# This is the "use Docker" part of the project: three INDEPENDENT Redis nodes,
+# one container each, on ports 6379 / 6380 / 6381. The backend connects to all
+# three and our consistent-hashing ring (src/cache/ring.ts) decides which node
+# owns each key. They share nothing — that's what makes the cache "distributed".
+#
+#   Start:  docker compose up -d
+#   Check:  docker compose ps
+#   Logs:   docker compose logs -f
+#   Stop:   docker compose down
+#
+# (If Docker isn't installed, scripts/redis-local.sh runs the same 3 nodes as
+#  local redis-server processes — identical behaviour for development.)
+
+services:
+  cache-a:
+    image: redis:7-alpine
+    container_name: typeahead-cache-a
+    command: ["redis-server", "--port", "6379", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6379:6379"
+
+  cache-b:
+    image: redis:7-alpine
+    container_name: typeahead-cache-b
+    command: ["redis-server", "--port", "6380", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6380:6380"
+
+  cache-c:
+    image: redis:7-alpine
+    container_name: typeahead-cache-c
+    command: ["redis-server", "--port", "6381", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6381:6381"
+# Note: --save "" and --appendonly no disable Redis persistence on purpose.
+# A cache is meant to be rebuildable from the source of truth (trie/SQLite); we
+# don't want it writing dump files. If a node restarts empty, the next requests
+# simply MISS and repopulate it — correctness is unaffected.
