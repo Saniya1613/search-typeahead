@@ -1,0 +1,114 @@
+:root {
+  --bg: #0f1115;
+  --panel: #181b22;
+  --border: #2a2f3a;
+  --text: #e6e8ec;
+  --muted: #8b93a3;
+  --accent: #4c8bf5;
+  --accent-soft: #1f2c44;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+header h1 { margin: 0 0 4px; font-size: 28px; }
+.sub { margin: 0 0 28px; color: var(--muted); font-size: 14px; }
+
+.searchbox { position: relative; display: flex; gap: 8px; }
+
+.searchbox input {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 16px;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+}
+.searchbox input:focus { border-color: var(--accent); }
+
+.searchbox button {
+  padding: 0 18px;
+  font-size: 15px;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.searchbox button:disabled { opacity: 0.4; cursor: default; }
+
+.dropdown {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.dropdown .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.dropdown .row.active { background: var(--accent-soft); }
+.dropdown .row .q { font-size: 15px; }
+.dropdown .row .count { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+.dropdown .state { padding: 10px; color: var(--muted); }
+.dropdown .state.error { color: #ff7676; }
+.dropdown .source {
+  padding: 6px 10px 2px;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: right;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+.result {
+  margin: 18px 2px;
+  padding: 12px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.trending { margin-top: 40px; }
+.trending h2 { font-size: 16px; color: var(--text); margin-bottom: 10px; }
+.trending ol, .trending p { padding-left: 18px; }
+.trending li { margin: 6px 0; }
+
+.link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+}
+.muted { color: var(--muted); font-size: 13px; }
