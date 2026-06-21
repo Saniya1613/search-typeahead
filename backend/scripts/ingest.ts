@@ -3,7 +3,7 @@
  *
  * Run once (after make_dataset.py):  npm run ingest
  *
- * Performance note for the viva: inserting 150k rows one-by-one with autocommit
+ * Performance note: inserting 150k rows one-by-one with autocommit
  * would mean 150k separate transactions (and 150k fsyncs) — slow. We wrap the
  * whole load in a SINGLE transaction (`insertMany`), so it commits once. This is
  * the same idea as Phase 5's batch writes: amortize the per-write fixed cost by

@@ -5,12 +5,12 @@
  *  - Durable: data survives a restart (unlike an in-memory map). The assignment
  *    requires "maintain query-count data reliably".
  *  - Zero-ops: a single file on disk, nothing to administer — easy to open and
- *    inspect during the viva (`sqlite3 data/typeahead.db`).
+ *    inspect (`sqlite3 data/typeahead.db`).
  *  - better-sqlite3 is SYNCHRONOUS. That's a feature here: no callback/promise
  *    juggling, and our reads come from the in-memory trie anyway, so we never
  *    block the event loop on a hot path.
  *
- * IMPORTANT separation of concerns (a likely viva question):
+ * IMPORTANT separation of concerns:
  *   The DB is for DURABILITY. It is NOT what we read on every keystroke.
  *   Fast prefix lookups come from the in-memory Trie (trie.ts), which we build
  *   ONCE from this table on boot. DB = source of truth; Trie = read index.

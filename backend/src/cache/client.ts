@@ -145,7 +145,7 @@ export class CacheCluster {
     return total === 0 ? 0 : this.hits / total;
   }
 
-  /** Show how a sample of prefixes spreads across the 3 nodes (demo/viva). */
+  /** Show how a sample of prefixes spreads across the 3 nodes (demo). */
   distribution(sampleKeys: string[]): Record<string, number> {
     return this.ring.distribution(sampleKeys.map((p) => CacheCluster.key(p)));
   }

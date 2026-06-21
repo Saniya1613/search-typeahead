@@ -1,7 +1,7 @@
 /**
  * context.ts — wires the app's long-lived components together and hands them to
  * the routes. Keeping them in one object (instead of module-level globals)
- * makes the data flow explicit and easy to talk through in the viva.
+ * makes the data flow explicit and easy to follow.
  *
  * Components grow phase by phase:
  *   Phase 1/2: trie

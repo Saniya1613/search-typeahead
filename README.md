@@ -5,13 +5,8 @@ ranked by popularity, search-count tracking, a **distributed cache with
 consistent hashing**, **batched writes**, and **trending searches** with
 recency-aware ranking. Plus a small React frontend.
 
-This is a university HLD assignment graded on a live viva — I must be able to
-explain **every design choice and every line**. So the concepts are written down:
-
-- **[`docs/CONCEPTS.md`](docs/CONCEPTS.md)** — plain-English explanation of every
-  concept and design choice. **Read this first.**
-- **[`docs/VIVA-QUESTIONS.md`](docs/VIVA-QUESTIONS.md)** — examiner question bank
-  with answers.
+A full design write-up — architecture, design decisions, trade-offs, and measured
+results — is in **[`docs/REPORT.md`](docs/REPORT.md)**.
 
 ## Stack
 
@@ -41,7 +36,7 @@ explain **every design choice and every line**. So the concepts are written down
    3 Redis nodes = Docker containers (docker-compose.yml) or local processes.
 ```
 
-See [`docs/CONCEPTS.md`](docs/CONCEPTS.md) §0 for a fuller diagram and the data flow.
+See [`docs/REPORT.md`](docs/REPORT.md) for the full architecture write-up and data flow.
 
 ## Folder map
 
@@ -50,8 +45,7 @@ search-typeahead/
 ├── README.md                  ← you are here
 ├── docker-compose.yml         ← the 3 Redis cache nodes (Docker)
 ├── docs/
-│   ├── CONCEPTS.md            ← explanation of every concept  (STUDY THIS)
-│   └── VIVA-QUESTIONS.md      ← examiner question bank + answers
+│   └── REPORT.md             ← design write-up, trade-offs, requirement coverage
 ├── backend/
 │   ├── data/                  ← dataset.csv + typeahead.db (git-ignored)
 │   ├── scripts/

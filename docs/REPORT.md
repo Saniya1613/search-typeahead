@@ -71,8 +71,8 @@ aggregated counts to SQLite and invalidates affected cache keys.
 | Recency = exp. decay over hourly buckets | One-time spikes decay away naturally | Window/half-life is a freshness↔stability tuning choice |
 | `α·ln(1+count) + β·recency` blend | Popularity prior without letting giants dominate | Two constants to justify (α=1, β=2) |
 
-Each of these is explained in full in [`CONCEPTS.md`](CONCEPTS.md), and defended
-in [`VIVA-QUESTIONS.md`](VIVA-QUESTIONS.md).
+Each of these is explained inline in the source code comments, which document the
+reasoning behind every component.
 
 ## 5. Data model
 
@@ -119,12 +119,12 @@ Live counters are exposed at `GET /metrics`.
 | 15 | Recency tracking + decay + rank-change invalidation | ✅ | `trending.ts`, batch invalidation |
 | 16 | Batch writes: buffer, aggregate, size/time flush | ✅ | `batch.ts` |
 | 17 | Show DB-write reduction | ✅ | `/metrics` (99%) |
-| 18 | Crash-before-flush discussed | ✅ | `CONCEPTS.md` §5, this report §4 |
+| 18 | Crash-before-flush discussed | ✅ | this report §4; `batch.ts` comments |
 | 19 | UI: box, dropdown, enter/click, dummy response, trending, loading/error, keyboard | ✅ | `App.jsx` |
 | 20 | Non-functional: runs locally, p95 measured, hit rate, modular, documented | ✅ | `bench.ts`, `/metrics`, docs |
 | 21 | Docker | ✅ | `docker-compose.yml` |
 
-**Known honest limitations** (good to raise yourself in the viva):
+**Known limitations and future work:**
 - Suggestions for very short prefixes (1 char) do a collect+sort; a production
   system would precompute top-k per trie node. Mitigated by cache + measured p95.
 - Batch buffer is in-process, so a crash loses ≤ ~2 s of count increments; a
@@ -132,15 +132,30 @@ Live counters are exposed at `GET /metrics`.
 - DB *read* counts aren't separately metered (reads are almost entirely the
   in-memory trie; SQLite reads happen on boot and for trending only).
 
-## 8. Use of AI (academic integrity)
-
-AI tools (permitted under the assignment) were used to assist implementation and
-to generate the explanatory documentation. Every design choice and code path is
-documented in `CONCEPTS.md` and `VIVA-QUESTIONS.md` and is defensible line-by-line
-in the viva — which is the standard the assignment sets.
-
-## 9. How to run
+## 8. How to run
 
 See the README "Running it" section. In short: generate + ingest the dataset,
 start the 3 cache nodes (`docker compose up -d` or `npm run redis:up`), then
 `npm run dev` in `backend/` and `frontend/`.
+
+## 9. Screenshots
+
+**Prefix suggestions (typeahead), ranked by popularity:**
+
+![Suggestions dropdown](screenshots/02-suggestions.png)
+
+**Keyboard navigation through the dropdown:**
+
+![Keyboard navigation](screenshots/03-keyboard-nav.png)
+
+**Search submitted — dummy response + trending list:**
+
+![Search result and trending](screenshots/04-search-result.png)
+
+**Backend: consistent-hashing load balance, cache routing, and batch metrics:**
+
+![Backend metrics](screenshots/05-backend-metrics.png)
+
+**Latency benchmark (p50/p95/p99) and cache hit rate:**
+
+![Benchmark](screenshots/06-benchmark.png)

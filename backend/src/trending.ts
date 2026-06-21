@@ -24,7 +24,7 @@
  *
  *     recency = Σ_over_buckets  hits(bucket) * weight(age_of_bucket)
  *
- * This is why a ONE-TIME SPIKE doesn't dominate forever (a key examiner point):
+ * This is why a ONE-TIME SPIKE doesn't dominate forever:
  * its hits sit in old buckets whose weight decays toward zero, so within a day
  * or two it naturally falls back down. A query that keeps getting searched keeps
  * refilling recent (high-weight) buckets and stays up.

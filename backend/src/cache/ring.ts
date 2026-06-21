@@ -22,7 +22,7 @@
  * owner. Adding a node similarly only steals the keys on its new arc. On average
  * only ~K/N keys move when N changes, instead of nearly all of them.
  *
- * ── Virtual nodes (the part examiners poke at) ──────────────────────────────
+ * ── Virtual nodes ───────────────────────────────────────────────────────────
  * If each physical node sat at just ONE point, the arcs between 3 random points
  * would be very uneven — one node could own 60% of the circle by luck. So each
  * physical node is hashed to MANY positions (VNODES of them, e.g. 150). Those
@@ -30,7 +30,7 @@
  * physical node ends up owning ~1/3 of the space. More vnodes ⇒ smoother
  * distribution and smaller wobble when a node joins/leaves.
  *
- * Vocabulary recap for the viva:
+ * Vocabulary recap:
  *   hash space  = the circle [0, 2^32)
  *   virtual node = one (position, physicalNodeId) point on the circle
  *   getNode(key) = hash key → binary-search clockwise → owning physical node
@@ -128,7 +128,7 @@ export class HashRing {
   }
 
   /**
-   * Diagnostics for the viva/demo: send a sample of keys through getNode and
+   * Diagnostics / demo: send a sample of keys through getNode and
    * report how the load splits across physical nodes. Should be ~even.
    */
   distribution(sampleKeys: string[]): Record<string, number> {

@@ -25,7 +25,7 @@
  * Size keeps memory/latency bounded under load; time bounds staleness when load
  * is light (so a single search still lands within FLUSH_MS).
  *
- * ── Durability trade-off (write this in the README, examiners ask) ──────────
+ * ── Durability trade-off (documented in the report) ────────────────────────
  * Events live in an in-process Map until flushed. If the process crashes
  * mid-window, those un-flushed increments are LOST. For an assignment that's an
  * acceptable trade (we lose at most ~FLUSH_MS of count increments, and counts

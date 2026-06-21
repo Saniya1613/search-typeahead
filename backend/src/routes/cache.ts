@@ -1,6 +1,6 @@
 /**
  * Cache inspection routes — required by the assignment ("Debug cache routing")
- * and very useful to SHOW the examiner that consistent hashing actually works.
+ * and very useful to demonstrate that consistent hashing actually works.
  *
  *   GET /cache/debug?prefix=<x>   -> which node owns this prefix, and is it cached?
  *   GET /cache/ring               -> load distribution of a key sample across nodes

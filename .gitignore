@@ -13,3 +13,4 @@ backend/data/redis/
 # logs & os
 *.log
 .DS_Store
+_vivaprep_DO_NOT_SUBMIT/
