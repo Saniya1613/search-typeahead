@@ -104,9 +104,13 @@ export default function App() {
   return (
     <div className="page">
       <header>
-        <h1>Search Typeahead</h1>
+        <div className="brand">
+          <span className="brand-mark" aria-hidden="true">⌕</span>
+          <h1>quicktype<span className="brand-dot">.</span></h1>
+        </div>
         <p className="sub">
-          Trie suggestions · consistent-hashing cache · batched writes · trending
+          prefix suggestions ranked by popularity — trie index, consistent-hashing
+          cache, batched writes &amp; recency-aware trending
         </p>
       </header>
 
@@ -127,6 +131,9 @@ export default function App() {
         <button onClick={() => runSearch(input)} disabled={!input.trim()}>
           Search
         </button>
+        <p className="hint">
+          <kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>↵</kbd> search · <kbd>esc</kbd> close
+        </p>
 
         {/* Suggestion dropdown */}
         {open && input.trim() && (
@@ -154,7 +161,9 @@ export default function App() {
                 </li>
               ))}
             {!loading && !error && source && (
-              <li className="source">served from: {source}</li>
+              <li className="source">
+                served from <span className={`pill pill-${source}`}>{source}</span>
+              </li>
             )}
           </ul>
         )}
@@ -173,16 +182,17 @@ export default function App() {
         {trending.length === 0 ? (
           <p className="muted">No trending data yet — run a few searches.</p>
         ) : (
-          <ol>
-            {trending.map((t) => (
+          <ul className="trend-list">
+            {trending.map((t, i) => (
               <li key={t.query}>
+                <span className={`rank${i < 3 ? " top" : ""}`}>{i + 1}</span>
                 <button className="link" onClick={() => { setInput(t.query); runSearch(t.query); }}>
                   {t.query}
                 </button>
-                <span className="muted"> · count {t.count.toLocaleString()}</span>
+                <span className="muted">{t.count.toLocaleString()}</span>
               </li>
             ))}
-          </ol>
+          </ul>
         )}
       </section>
     </div>
