@@ -148,7 +148,7 @@ Open the printed URL, start typing, and watch the dropdown + trending update.
 
 ## Build phases (mapped to the 100-mark rubric)
 
-- [x] **Phase 0 — Dataset + skeleton** · 149,998 `(query,count)` rows in SQLite
+- [x] **Phase 0 — Dataset + skeleton** · 153,429 `(query,count)` rows (single words + multi-word phrases) in SQLite
 - [x] **Phase 1 — Suggestion API** · trie + `GET /suggest` (top 10 by count) · _Basic (60)_
 - [x] **Phase 2 — Search submission** · `POST /search` increments counts · _Basic (60)_
 - [x] **Phase 3 — Frontend** · debounced box, dropdown, keyboard nav, trending · _Basic (60)_

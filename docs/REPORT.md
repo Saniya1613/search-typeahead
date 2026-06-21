@@ -29,7 +29,7 @@ that split.
 | Read index | Hand-written Trie | O(prefix length) lookups |
 | Cache | 3 Redis nodes + hand-written consistent-hashing ring (`ioredis`) | Distributed cache graded by the rubric |
 | Frontend | React 18 + Vite | Debounce, keyboard nav, trending UI |
-| Dataset | Python `wordfreq` (149,998 rows) | Real frequency signal, > 100k minimum |
+| Dataset | `wordfreq` single words + generated multi-word search phrases (153,429 rows) | Real frequency signal + phrase autocomplete, > 100k |
 | Infra | Docker Compose (3 Redis containers) | "Use Docker" requirement |
 
 ## 3. Architecture
@@ -75,6 +75,14 @@ Each of these is explained inline in the source code comments, which document th
 reasoning behind every component.
 
 ## 5. Data model
+
+The dataset (`scripts/make_dataset.py`) has two parts: ~150k single-word terms
+from `wordfreq` (frequency = popularity signal), plus ~3.4k generated multi-word
+search phrases (popular "head" terms × common autocomplete continuations, e.g.
+`iphone pro max`, `best laptop`, `macbook air price`). Phrase counts are derived
+from the head's popularity and scaled down for specificity, so a phrase always
+ranks below its head — the natural autocomplete order. The trie keys on the full
+string, so single words and phrases share one index.
 
 - `queries(query PRIMARY KEY, count)` — all-time popularity (source of truth).
 - `query_hourly(query, hour, hits)` — recent activity bucketed by clock-hour,
