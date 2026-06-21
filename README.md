@@ -38,6 +38,24 @@ results — is in **[`docs/REPORT.md`](docs/REPORT.md)**.
 
 See [`docs/REPORT.md`](docs/REPORT.md) for the full architecture write-up and data flow.
 
+## Screenshots
+
+**Prefix suggestions ranked by popularity, with keyboard navigation:**
+
+![Suggestions](docs/screenshots/02-suggestions.png)
+
+**Search submitted — dummy response + trending list:**
+
+![Search result and trending](docs/screenshots/04-search-result.png)
+
+**Backend — consistent-hashing load balance, cache routing, batch write reduction:**
+
+![Backend metrics](docs/screenshots/05-backend-metrics.png)
+
+**Latency benchmark (p50/p95/p99) and cache hit rate:**
+
+![Benchmark](docs/screenshots/06-benchmark.png)
+
 ## Folder map
 
 ```
