@@ -4,8 +4,8 @@ node_modules/
 # build output
 dist/
 
-# data (generated/large — regenerated via make_dataset.py + npm run ingest)
-backend/data/*.csv
+# data — dataset.csv IS committed (so deploy can build the DB without Python);
+# the SQLite DB and redis dumps are generated and stay ignored.
 backend/data/*.db
 backend/data/*.db-*
 backend/data/redis/

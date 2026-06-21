@@ -7,6 +7,10 @@
 
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { createContext } from "./context.ts";
 import { registerSuggest } from "./routes/suggest.ts";
 import { registerSearch } from "./routes/search.ts";
@@ -26,6 +30,23 @@ registerCacheRoutes(app, ctx);
 registerTrending(app, ctx);
 
 app.get("/health", async () => ({ ok: true, queries: ctx.trie.wordCount }));
+
+// In production we serve the built React app from the same server, so one
+// deployable service hosts both the API and the UI. The frontend calls the API
+// with same-origin root paths (/suggest, /search, ...), which match the routes
+// above; any other GET falls back to index.html (single-page app).
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const distDir = join(__dirname, "..", "..", "frontend", "dist");
+if (existsSync(distDir)) {
+  await app.register(fastifyStatic, { root: distDir });
+  app.setNotFoundHandler((req, reply) => {
+    if (req.method === "GET" && !req.url.startsWith("/api")) {
+      return reply.sendFile("index.html");
+    }
+    reply.code(404).send({ error: "not found" });
+  });
+  app.log.info(`serving frontend from ${distDir}`);
+}
 
 // Graceful shutdown: drain the batch buffer to SQLite and close Redis so we
 // don't drop the last (un-flushed) window of search counts on Ctrl-C.

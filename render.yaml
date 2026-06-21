@@ -1,0 +1,10 @@
+# Render.com Blueprint — one-click deploy of the all-in-one container.
+# In Render: New + → Blueprint → connect this repo. Render reads this file.
+services:
+  - type: web
+    name: search-typeahead
+    runtime: docker
+    plan: free            # free tier (spins down when idle; cold start ~1 min)
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true

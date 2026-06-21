@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+backend/data/*.db
+backend/data/*.db-*
+backend/data/redis
+**/*.log
+_vivaprep_DO_NOT_SUBMIT
+.git
+docs/screenshots
+docs/*.pdf
+docs/*.docx

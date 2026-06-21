@@ -134,6 +134,12 @@ cd frontend && npm run dev         # http://localhost:5173 (falls back if taken)
 
 Open the printed URL, start typing, and watch the dropdown + trending update.
 
+### Deploy
+
+The whole system (backend + its 3 Redis cache nodes + built frontend) ships as one
+Docker container — see [`docs/DEPLOY.md`](docs/DEPLOY.md). One-click on Render via the
+included `render.yaml`, or `docker build -t search-typeahead . && docker run -p 3001:3001 search-typeahead`.
+
 ## API reference
 
 | Method | Route | Purpose |
