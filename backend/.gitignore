@@ -2,6 +2,5 @@ node_modules/
 dist/
 data/*.db
 data/*.db-*
-data/*.csv
 data/redis/
 *.log
